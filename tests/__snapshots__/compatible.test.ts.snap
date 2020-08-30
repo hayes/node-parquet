@@ -1,0 +1,496 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`compatibility alltypes_dictionary 1`] = `
+Array [
+  Object {
+    "bigint_col": 0n,
+    "bool_col": true,
+    "date_string_col": "01/01/09",
+    "double_col": 0,
+    "float_col": 0,
+    "id": 0,
+    "int_col": 0,
+    "smallint_col": 0,
+    "string_col": "0",
+    "timestamp_col": 45283676094696639722160128n,
+    "tinyint_col": 0,
+  },
+  Object {
+    "bigint_col": 10n,
+    "bool_col": false,
+    "date_string_col": "01/01/09",
+    "double_col": 10.1,
+    "float_col": 1.100000023841858,
+    "id": 1,
+    "int_col": 1,
+    "smallint_col": 1,
+    "string_col": "1",
+    "timestamp_col": 45283676094696699722160128n,
+    "tinyint_col": 1,
+  },
+]
+`;
+
+exports[`compatibility alltypes_plane 1`] = `
+Array [
+  Object {
+    "bigint_col": 0n,
+    "bool_col": true,
+    "date_string_col": "03/01/09",
+    "double_col": 0,
+    "float_col": 0,
+    "id": 4,
+    "int_col": 0,
+    "smallint_col": 0,
+    "string_col": "0",
+    "timestamp_col": 45284764452596988585705472n,
+    "tinyint_col": 0,
+  },
+  Object {
+    "bigint_col": 10n,
+    "bool_col": false,
+    "date_string_col": "03/01/09",
+    "double_col": 10.1,
+    "float_col": 1.100000023841858,
+    "id": 5,
+    "int_col": 1,
+    "smallint_col": 1,
+    "string_col": "1",
+    "timestamp_col": 45284764452597048585705472n,
+    "tinyint_col": 1,
+  },
+  Object {
+    "bigint_col": 0n,
+    "bool_col": true,
+    "date_string_col": "04/01/09",
+    "double_col": 0,
+    "float_col": 0,
+    "id": 6,
+    "int_col": 0,
+    "smallint_col": 0,
+    "string_col": "0",
+    "timestamp_col": 45285336301663273581805568n,
+    "tinyint_col": 0,
+  },
+  Object {
+    "bigint_col": 10n,
+    "bool_col": false,
+    "date_string_col": "04/01/09",
+    "double_col": 10.1,
+    "float_col": 1.100000023841858,
+    "id": 7,
+    "int_col": 1,
+    "smallint_col": 1,
+    "string_col": "1",
+    "timestamp_col": 45285336301663333581805568n,
+    "tinyint_col": 1,
+  },
+  Object {
+    "bigint_col": 0n,
+    "bool_col": true,
+    "date_string_col": "02/01/09",
+    "double_col": 0,
+    "float_col": 0,
+    "id": 2,
+    "int_col": 0,
+    "smallint_col": 0,
+    "string_col": "0",
+    "timestamp_col": 45284247943762924718260224n,
+    "tinyint_col": 0,
+  },
+  Object {
+    "bigint_col": 10n,
+    "bool_col": false,
+    "date_string_col": "02/01/09",
+    "double_col": 10.1,
+    "float_col": 1.100000023841858,
+    "id": 3,
+    "int_col": 1,
+    "smallint_col": 1,
+    "string_col": "1",
+    "timestamp_col": 45284247943762984718260224n,
+    "tinyint_col": 1,
+  },
+  Object {
+    "bigint_col": 0n,
+    "bool_col": true,
+    "date_string_col": "01/01/09",
+    "double_col": 0,
+    "float_col": 0,
+    "id": 0,
+    "int_col": 0,
+    "smallint_col": 0,
+    "string_col": "0",
+    "timestamp_col": 45283676094696639722160128n,
+    "tinyint_col": 0,
+  },
+  Object {
+    "bigint_col": 10n,
+    "bool_col": false,
+    "date_string_col": "01/01/09",
+    "double_col": 10.1,
+    "float_col": 1.100000023841858,
+    "id": 1,
+    "int_col": 1,
+    "smallint_col": 1,
+    "string_col": "1",
+    "timestamp_col": 45283676094696699722160128n,
+    "tinyint_col": 1,
+  },
+]
+`;
+
+exports[`compatibility alltypes_plane.snappy 1`] = `
+Array [
+  Object {
+    "bigint_col": 0n,
+    "bool_col": true,
+    "date_string_col": "04/01/09",
+    "double_col": 0,
+    "float_col": 0,
+    "id": 6,
+    "int_col": 0,
+    "smallint_col": 0,
+    "string_col": "0",
+    "timestamp_col": 45285336301663273581805568n,
+    "tinyint_col": 0,
+  },
+  Object {
+    "bigint_col": 10n,
+    "bool_col": false,
+    "date_string_col": "04/01/09",
+    "double_col": 10.1,
+    "float_col": 1.100000023841858,
+    "id": 7,
+    "int_col": 1,
+    "smallint_col": 1,
+    "string_col": "1",
+    "timestamp_col": 45285336301663333581805568n,
+    "tinyint_col": 1,
+  },
+]
+`;
+
+exports[`compatibility binary 1`] = `
+Array [
+  Object {
+    "foo": Object {
+      "data": Array [
+        0,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        1,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        2,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        3,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        4,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        5,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        6,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        7,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        8,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        9,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        10,
+      ],
+      "type": "Buffer",
+    },
+  },
+  Object {
+    "foo": Object {
+      "data": Array [
+        11,
+      ],
+      "type": "Buffer",
+    },
+  },
+]
+`;
+
+exports[`compatibility datapage_v2 1`] = `
+Array [
+  Object {
+    "a": Object {
+      "data": Array [
+        97,
+        98,
+        99,
+      ],
+      "type": "Buffer",
+    },
+    "b": 2,
+    "c": 2,
+    "d": true,
+    "e": Object {
+      "list": Array [
+        Object {
+          "element": 1,
+        },
+        Object {
+          "element": 2,
+        },
+        Object {
+          "element": 3,
+        },
+      ],
+    },
+  },
+  Object {
+    "a": Object {
+      "data": Array [
+        97,
+        98,
+        99,
+      ],
+      "type": "Buffer",
+    },
+    "b": 3,
+    "c": 3,
+    "d": true,
+    "e": null,
+  },
+  Object {
+    "a": Object {
+      "data": Array [
+        97,
+        98,
+        99,
+      ],
+      "type": "Buffer",
+    },
+    "b": 4,
+    "c": 4,
+    "d": true,
+    "e": null,
+  },
+  Object {
+    "a": null,
+    "b": 5,
+    "c": 5,
+    "d": false,
+    "e": Object {
+      "list": Array [
+        Object {
+          "element": 1,
+        },
+        Object {
+          "element": 2,
+        },
+        Object {
+          "element": 3,
+        },
+      ],
+    },
+  },
+  Object {
+    "a": Object {
+      "data": Array [
+        97,
+        98,
+        99,
+      ],
+      "type": "Buffer",
+    },
+    "b": 6,
+    "c": 2,
+    "d": true,
+    "e": Object {
+      "list": Array [
+        Object {
+          "element": 1,
+        },
+        Object {
+          "element": 2,
+        },
+      ],
+    },
+  },
+]
+`;
+
+exports[`compatibility dict-page-offset-zero 1`] = `
+Array [
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+  Object {
+    "l_partkey": 1552,
+  },
+]
+`;

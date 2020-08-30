@@ -1,0 +1,80 @@
+{
+  "name": "@parquet/core",
+  "description": "A parquet implement for node and typescript",
+  "main": "./lib/index.js",
+  "version": "0.1.0",
+  "license": "ISC",
+  "keywords": [
+    "parquet",
+    "dremel",
+    "encoding",
+    "parquets",
+    "typescript",
+    "ts",
+    "writer",
+    "reader"
+  ],
+  "scripts": {
+    "prepare": "beemo create-config --silent",
+    "build": "beemo typescript",
+    "ci": "yarn run type && yarn run test && yarn run lint",
+    "coverage": "yarn run test --coverage",
+    "format": "beemo prettier",
+    "lint": "beemo eslint",
+    "release": "npx np --yolo",
+    "test": "beemo jest",
+    "type": "beemo typescript --noEmit",
+    "prerelease": "yarn test && yarn run build"
+  },
+  "dependencies": {
+    "thrift": "^0.12.0",
+    "uuid": "^8.3.0",
+    "varint": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@beemo/cli": "^1.0.11",
+    "@beemo/core": "^1.1.8",
+    "@beemo/driver-babel": "^1.2.5",
+    "@beemo/driver-eslint": "^1.2.3",
+    "@beemo/driver-jest": "^1.2.3",
+    "@creditkarma/thrift-server-core": "^0.16.1",
+    "@creditkarma/thrift-typescript": "^3.7.6",
+    "@milesj/build-tools": "^2.10.1",
+    "@types/bson": "^4.0.2",
+    "@types/thrift": "^0.10.10",
+    "@types/uuid": "^8.3.0",
+    "@types/varint": "^5.0.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2",
+    "brotli": "^1.3.2",
+    "bson": "^4.1.0",
+    "cppzst": "^2.0.6",
+    "lz4js": "^0.2.0",
+    "lzo": "^0.4.0",
+    "snappy": "^6.3.4"
+
+  },
+  "beemo": {
+    "module": "@milesj/build-tools",
+    "drivers": [
+      "babel",
+      "eslint",
+      "jest",
+      "prettier",
+      "typescript"
+    ],
+    "settings": {
+      "node": true
+    }
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "module": "./esm/index.js",
+  "types": "./lib/index.d.ts",
+  "sideEffects": false,
+  "resolutions": {
+    "typescript": "^4.0.2"
+  }
+}
