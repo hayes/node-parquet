@@ -1,0 +1,28 @@
+{
+  "name": "@parquet/util",
+  "description": "A parquet implement for node and typescript",
+  "main": "./lib/index.js",
+  "version": "0.1.0",
+  "license": "ISC",
+  "keywords": [
+    "parquet",
+    "dremel",
+    "encoding",
+    "parquets",
+    "typescript",
+    "ts",
+    "writer",
+    "reader",
+    "thrift"
+  ],
+  "dependencies": {
+    "thrift": "^0.12.0",
+    "varint": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=10.17.0"
+  },
+  "module": "./esm/index.js",
+  "types": "./lib/index.d.ts",
+  "sideEffects": false
+}

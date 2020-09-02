@@ -34,5 +34,6 @@ jest.config.js
 prettier.config.js
 tsconfig.json
 tsconfig.options.json
+tsconfig.eslint.json
 webpack.config.js
 *.tsbuildinfo
