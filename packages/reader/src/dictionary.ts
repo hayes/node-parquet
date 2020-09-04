@@ -1,7 +1,7 @@
 import { PageHeader, PageType, DictionaryPageHeader, Encoding } from '@parquet/thrift';
+import { ByteReader } from '@parquet/util';
 import ColumnChunkReader from './column-chunk';
 import BasePageReader, { PageData } from './page';
-import ByteReader from '../../../util/src/byt-reader';
 import { createEncoding } from '../encodings';
 
 export default class DictionaryPageReader<T = unknown> extends BasePageReader<T> {

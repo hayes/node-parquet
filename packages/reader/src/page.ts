@@ -1,7 +1,7 @@
 import { PageHeader, Type, PageType } from '@parquet/thrift';
 import ColumnChunkReader from './column-chunk';
 import BaseEncoding from '../encodings/base';
-import ByteReader from '../../../util/src/byt-reader';
+import ByteReader from '@parquet/util/lib/byt-reader';
 
 export interface PageData<T = unknown> {
   dLevels: number[];

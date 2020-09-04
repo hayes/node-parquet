@@ -1,7 +1,7 @@
 import { PageHeader, PageType, DataPageHeaderV2, Encoding, Type } from '@parquet/thrift';
 import ColumnChunkReader from './column-chunk';
 import BasePageReader, { PageData } from './page';
-import ByteReader from '../../../util/src/byt-reader';
+import ByteReader from '@parquet/util/lib/byt-reader';
 import { createEncoding } from '../encodings';
 import { minBitWidth } from '../byte-utils';
 

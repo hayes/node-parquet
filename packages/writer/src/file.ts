@@ -1,6 +1,6 @@
 // eslint-disable-next-line node/no-unsupported-features/node-builtins
 import { promises as fs } from 'fs';
-import ParquetSchema from '../../../schema/src/schema';
+import ParquetSchema from '@parquet/schema/lib/schema';
 
 const PARQUET_ID = 'PAR1';
 

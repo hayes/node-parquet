@@ -5,8 +5,8 @@ import DictionaryPageReader from './dictionary';
 import BasePageReader, { PageData } from './page';
 import DataPageReader from './data-page';
 import DataPageV2Reader from './data-page-v2';
-import ByteReader from '../../../util/src/byt-reader';
-import ParquetSchema from '../../../schema/src/schema';
+import ByteReader from '@parquet/util/lib/byt-reader';
+import ParquetSchema from '@parquet/schema/lib/schema';
 import compressionFromThrift, { BaseCompression } from '../compression';
 
 type PageTypeToReader<Type extends PageType, T> = Type extends PageType.DATA_PAGE
