@@ -193,7 +193,7 @@ describe('dremel encoding', () => {
     });
   });
 
-  test('disassemble some data', () => {
+  test('reassemble some data', () => {
     const data = schema.disassemble(sampleData);
     const assembled = schema.assemble(data);
 
