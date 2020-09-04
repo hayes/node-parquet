@@ -2,6 +2,14 @@
 
 import * as uuid from 'uuid';
 import { Type, SchemaElement, ConvertedType, TimeUnit } from '@parquet/thrift';
+import { ParquetLeafFieldDefinition } from '.';
+import {
+  SimpleTypeName,
+  DecimalTypeDefinition,
+  IntegerTypeDefinition,
+  TimeTypeDefinition,
+  TimestampTypeDefinition,
+} from './types';
 
 export default class LogicalType<T = unknown> {
   type: Type;
@@ -136,6 +144,66 @@ export default class LogicalType<T = unknown> {
     }
   }
 
+  static fromFieldDefinition(fieldDefinition: ParquetLeafFieldDefinition): LogicalType {
+    if (fieldDefinition.type instanceof LogicalType) {
+      return fieldDefinition.type;
+    }
+
+    const rawType = fieldDefinition.type;
+
+    if (typeof rawType === 'string') {
+      return this.fromTypeName(rawType);
+    }
+
+    switch (rawType.name) {
+      case 'DECIMAL':
+        return DecimalType.fromDefinition(rawType);
+      case 'TIME':
+        return TimeType.fromDefinition(rawType);
+      case 'TIMESTAMP':
+        return TimestampType.fromDefinition(rawType);
+      case 'INTEGER':
+        return IntType.fromDefinition(rawType);
+      default:
+        return this.fromTypeName(rawType.name);
+    }
+  }
+
+  static fromTypeName(typeName: SimpleTypeName): LogicalType {
+    switch (typeName) {
+      case 'STRING':
+        return new StringType(Type.BYTE_ARRAY);
+      case 'BOOLEAN':
+        return new LogicalType(Type.BOOLEAN, { bitWidth: 1, typeLength: 1 });
+      case 'BSON':
+        return new BSONType(Type.BYTE_ARRAY);
+      case 'BYTE_ARRAY':
+        return new LogicalType(Type.BYTE_ARRAY);
+      case 'DATE':
+        return new DateType(Type.INT32);
+      case 'DOUBLE':
+        return new LogicalType(Type.DOUBLE);
+      case 'ENUM':
+        return new EnumType(Type.BYTE_ARRAY);
+      case 'FLOAT':
+        return new LogicalType(Type.FLOAT);
+      case 'INT32':
+        return new IntType(Type.INT32, 32, true);
+      case 'INT64':
+        return new IntType(Type.INT64, 64, true);
+      case 'INTERVAL':
+        return new IntervalType(Type.FIXED_LEN_BYTE_ARRAY);
+      case 'JSON':
+        return new JSONType(Type.BYTE_ARRAY);
+      case 'UNKNOWN':
+        return new NullType(Type.INT32);
+      case 'UUID':
+        return new UUIDType(Type.FIXED_LEN_BYTE_ARRAY);
+      default:
+        throw new TypeError(`Unknown type ${typeName}`);
+    }
+  }
+
   serialize(value: T): unknown {
     return value;
   }
@@ -252,6 +320,24 @@ export class IntType extends LogicalType<number | bigint> {
     this.isSigned = isSigned;
     this.bitWidth = bitWidth;
   }
+
+  static fromDefinition(definition: IntegerTypeDefinition) {
+    let type;
+    switch (definition.bitWidth) {
+      case 8:
+      case 16:
+      case 32:
+        type = Type.INT32;
+        break;
+      case 64:
+        type = Type.INT64;
+        break;
+      default:
+        throw new Error(`Unsupported bitWidth: ${definition.bitWidth}`);
+    }
+
+    return new IntType(type, definition.bitWidth, definition.isSigned);
+  }
 }
 
 export class DecimalType extends LogicalType<number> {
@@ -273,6 +359,10 @@ export class DecimalType extends LogicalType<number> {
 
     this.scale = scale;
     this.precision = precision;
+  }
+
+  static fromDefinition(definition: DecimalTypeDefinition) {
+    return new DecimalType(Type.FIXED_LEN_BYTE_ARRAY, definition.scale, definition.precision);
   }
 
   serialize(value: number) {
@@ -327,6 +417,14 @@ export class TimeType extends LogicalType<unknown> {
     this.precision = precision;
   }
 
+  static fromDefinition(definition: TimeTypeDefinition) {
+    return new TimeType(
+      definition.precision === 'MILLIS' ? Type.INT32 : Type.INT64,
+      definition.isAdjustedToUTC,
+      definition.precision,
+    );
+  }
+
   serialize(value: number) {
     throw new Error('Time serialization not implemented yet');
   }
@@ -348,6 +446,14 @@ export class TimestampType extends LogicalType<unknown> {
 
     this.isAdjustedToUTC = isAdjustedToUTC;
     this.precision = precision;
+  }
+
+  static fromDefinition(definition: TimestampTypeDefinition) {
+    return new TimeType(
+      definition.precision === 'MILLIS' ? Type.INT32 : Type.INT64,
+      definition.isAdjustedToUTC,
+      definition.precision,
+    );
   }
 
   serialize(value: number) {

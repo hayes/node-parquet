@@ -1,4 +1,7 @@
+import { LogicalType } from '.';
+
 export interface TypeNameToJSType {
+  STRING: string;
   BOOLEAN: boolean;
   INT32: number;
   INT64: bigint;
@@ -20,6 +23,7 @@ export interface TypeNameToJSType {
 }
 
 export type SimpleTypeName =
+  | 'STRING'
   | 'BOOLEAN'
   | 'INT32'
   | 'INT64'
@@ -77,13 +81,17 @@ export interface ParquetLeafFieldDefinition {
     | SimpleTypeDefinition
     | DecimalTypeDefinition
     | TimeTypeDefinition
-    | TimeTypeDefinition
-    | IntegerTypeDefinition;
+    | TimestampTypeDefinition
+    | IntegerTypeDefinition
+    | LogicalType;
+  fields?: undefined;
+  fieldId?: number;
 }
 
 export interface ParquetNestedFieldDefinition {
   repetitionType: FieldRepetitionTypeName;
   fields: Record<string, ParquetFieldDefinition>;
+  fieldId?: number;
 }
 
 export type ParquetFieldDefinition = ParquetLeafFieldDefinition | ParquetNestedFieldDefinition;

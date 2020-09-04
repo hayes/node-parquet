@@ -1,91 +1,92 @@
-import { Type, FieldRepetitionType, SchemaElement } from '@parquet/thrift';
+/* eslint-disable max-classes-per-file */
+import { Type } from '@parquet/thrift';
 import LogicalType from './logical-types';
+import {
+  ParquetNestedFieldDefinition,
+  FieldRepetitionTypeName,
+  ParquetLeafFieldDefinition,
+} from './types';
+import { ColumnData, dremelDisassemble, dremelAssemble } from '.';
 
-export interface SchemaFields {
-  list: ParquetField[];
-  map: Record<string, ParquetField>;
-}
-
-export default class ParquetField {
+export class ParquetField {
   type: Type;
-  fieldId: number;
-  repetitionType: FieldRepetitionType;
   name: string;
+  repetitionType: FieldRepetitionTypeName;
   pathName: string;
-  logicalType: LogicalType | null;
   rLevel: number;
   dLevel: number;
-  parents: ParquetField[];
-  isLeaf: boolean;
+  logicalType: LogicalType;
+  fieldId: number | null;
+  parents: ParquetNestedField[];
 
   constructor(
-    thriftElement: SchemaElement,
-    {
-      dLevel,
-      rLevel,
-      parents,
-      isLeaf,
-    }: {
-      rLevel: number;
-      dLevel: number;
-      parents: ParquetField[];
-      isLeaf: boolean;
-    },
+    name: string,
+    fieldDefinition: ParquetLeafFieldDefinition,
+    parent?: ParquetNestedField,
   ) {
-    this.name = thriftElement.name;
-    this.type = thriftElement.type;
-    this.isLeaf = isLeaf;
-    this.repetitionType = thriftElement.repetition_type;
-    this.fieldId = thriftElement.field_id;
-    this.parents = parents;
-    this.pathName = [...parents.slice(1), this].map((el) => el.name).join('.');
-    this.logicalType = this.isLeaf ? LogicalType.fromThrift(thriftElement) : null;
-    this.rLevel = rLevel;
-    this.dLevel = dLevel;
+    this.name = name;
+    this.repetitionType = fieldDefinition.repetitionType;
+    this.pathName = parent ? `${parent.pathName}.${name}` : name;
+    this.rLevel = (parent?.rLevel || 0) + (this.repetitionType === 'REPEATED' ? 1 : 0);
+    this.dLevel = (parent?.dLevel || 0) + (this.repetitionType === 'REQUIRED' ? 0 : 1);
+    this.logicalType = LogicalType.fromFieldDefinition(fieldDefinition);
+    this.type = this.logicalType.type;
+    this.fieldId = fieldDefinition.fieldId ?? null;
+    this.parents = parent ? [...parent.parents, parent] : [];
   }
 
-  static fromThrift(elements: SchemaElement[]): SchemaFields {
-    let i = 0;
-    const list: ParquetField[] = [];
-    const map: Record<string, ParquetField> = {};
+  disassemble(rows: Record<string, unknown>[]): ColumnData {
+    return dremelDisassemble(this, rows);
+  }
 
-    for (; i < elements.length; i += 1) {
-      createElement([], 0, -1);
+  assemble<T extends Record<string, unknown>>(data: ColumnData, rows: T[]): T[] {
+    dremelAssemble(this, data, rows);
+
+    return rows;
+  }
+}
+
+export class ParquetNestedField {
+  name: string;
+  repetitionType: FieldRepetitionTypeName;
+  pathName: string;
+  rLevel: number;
+  dLevel: number;
+  fieldId: number | null;
+  parents: ParquetNestedField[];
+  fieldMap: Record<string, ParquetNestedField | ParquetField> = {};
+  fieldList: (ParquetNestedField | ParquetField)[] = [];
+
+  constructor(
+    name: string,
+    fieldDefinition: ParquetNestedFieldDefinition,
+    parent?: ParquetNestedField,
+  ) {
+    this.name = name;
+    this.repetitionType = fieldDefinition.repetitionType;
+    this.pathName = parent ? `${parent.pathName}.${name}` : name;
+    this.rLevel = (parent?.rLevel || 0) + (this.repetitionType === 'REPEATED' ? 1 : 0);
+    this.dLevel = (parent?.dLevel || 0) + (this.repetitionType === 'REQUIRED' ? 0 : 1);
+    this.fieldId = fieldDefinition.fieldId ?? null;
+    this.parents = parent ? [...parent.parents, parent] : [];
+
+    Object.keys(fieldDefinition.fields).forEach((childName) => {
+      const childDefinition = fieldDefinition.fields[childName];
+
+      if (childDefinition.fields) {
+        this.addChild(new ParquetNestedField(childName, childDefinition, this));
+      } else {
+        this.addChild(new ParquetField(childName, childDefinition, this));
+      }
+    });
+  }
+
+  addChild(field: ParquetNestedField | ParquetField) {
+    if (this.fieldMap[field.name]) {
+      throw new Error(`Nested child with name ${field.name} already exists`);
     }
 
-    function createElement(parents: ParquetField[], rLevel: number, dLevel: number) {
-      const thriftElement = elements[i++];
-
-      const children: Record<string, ParquetField> = {};
-      const currentRLevel =
-        rLevel + (thriftElement.repetition_type === FieldRepetitionType.REPEATED ? 1 : 0);
-      const currentDLevel =
-        dLevel + (thriftElement.repetition_type === FieldRepetitionType.REQUIRED ? 0 : 1);
-
-      const element = new ParquetField(thriftElement, {
-        rLevel: currentRLevel,
-        dLevel: currentDLevel,
-        parents,
-        isLeaf: !thriftElement.num_children,
-      });
-
-      if (element.isLeaf) {
-        list.push(element);
-      }
-
-      for (let j = 0; j < thriftElement.num_children || 0; j += 1) {
-        const child = createElement([...parents, element], currentRLevel, currentDLevel);
-
-        children[child.name] = child;
-        map[child.pathName] = child;
-      }
-
-      return element;
-    }
-
-    return {
-      list,
-      map,
-    };
+    this.fieldMap[field.name] = field;
+    this.fieldList.push(field);
   }
 }
